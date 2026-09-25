@@ -1,15 +1,13 @@
 {
   "name": "app",
   "version": "1.0.0",
+  "type": "module",
   "description": "When you're ready, start your application by running: `docker compose up --build`.",
   "main": "vite.config.js",
   "scripts": {
     "dev": "vite",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "vite": "^8.3.1"
   }
