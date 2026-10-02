@@ -13,8 +13,3 @@ Propiedades:
 - `precioBase` (number): el precio en euros antes de aplicar ningún ajuste.
 - `estado` (string): el estado del juego. Solo puede ser uno de los valores de `ESTADOS`.
 - `stock` (number): las unidades que quedan.
-
-### Por qué lo hice así
-
-- Hice `ESTADOS` como constante para no escribir los estados a mano y evitar fallos de escritura.
-- Todas las propiedades son tipos simples (string y number), sin objetos dentro de otros objetos. Así es más fácil usar `filter`, `map` y `find`.
