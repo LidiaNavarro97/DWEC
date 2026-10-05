@@ -36,28 +36,21 @@ export function calcularPrecio({ precioBase, estado }, unidades) {
 
 // TABLA C
 // si tras una venta el stock queda por debajo de 3, el catalogo muestra un error
+// copio las propiedades del producto en un objeto nuevo
+// nunevoStock como va detras, piso el valor de lo q tenga copiado
 
-export function vender(producto, unidades) {
-  const { titulo, stock } = producto;
- 
-  if (unidades > stock) {
-    console.log(`No hay stock suficiente de ${titulo}`);
-    return;
-  }
- 
-  const total = calcularPrecio(producto, unidades);
-  producto.stock = stock - unidades;
-  producto.stockBajo = producto.stock < 3;
- 
-  console.log(`Vendidas ${unidades} de ${titulo}: ${total} €`);
-  return total;
+export function conStock(producto, nuevoStock) {
+  return { ...producto, stock: nuevoStock, stockBajo: nuevoStock < 3 };
 }
-
-// Listado del catálogo
-
-export function mostrarCatalogo(catalogo) {
-  catalogo.forEach(({ id, titulo, stock, stockBajo }) => {
-    const aviso = stockBajo ? ' ⚠ Stock bajo' : ''; // una ternaria, actua como un if
-    console.log(`${id} - ${titulo} - stock: ${stock}${aviso}`);
-  });
+ 
+// Devuelve un array NUEVO donde solo cambia el producto indicado
+export function actualizarProducto(productos, productoNuevo) {
+  return productos.map((p) => (p.id === productoNuevo.id ? productoNuevo : p));
+}
+ 
+// si stock bajo es true, aviso con stock bajo
+// si es false, porque no se venda, vale texto vacio
+export function formatearProducto({ id, titulo, stock, stockBajo }) {
+  const aviso = stockBajo ? ' ⚠ Stock bajo' : '';
+  return `${id} - ${titulo} - stock: ${stock}${aviso}`;
 }
