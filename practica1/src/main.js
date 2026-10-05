@@ -10,4 +10,3 @@ vender(catalogoInicial[2], 5);
 
 mostrarCatalogo(catalogoInicial);
 
-iniciarMenu();
