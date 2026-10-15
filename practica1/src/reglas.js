@@ -12,8 +12,6 @@ function ajusteEstado(estado) {
       return 0.85; // -15%
     case 'solo-cartucho':
       return 0.7; // -30%
-    default:
-      console.error(`Estado no válido: ${estado}`);
   }
 }
 

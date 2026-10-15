@@ -1,6 +1,5 @@
 import { catalogoInicial } from './data/catalogo.js';
 import { vender, mostrarCatalogo } from './reglas.js';
-import { iniciarMenu } from './menu.js';
 
 vender(catalogoInicial[9], 1); 
 vender(catalogoInicial[1], 1); 
