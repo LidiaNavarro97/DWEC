@@ -1,5 +1,3 @@
-import { ESTADOS } from '../models/estados.js';
-
 export const catalogoInicial = [
   {
     id: 'SNES-001',
@@ -7,7 +5,7 @@ export const catalogoInicial = [
     plataforma: 'SNES',
     categoria: 'Plataformas',
     precioBase: 45,
-    estado: ESTADOS.USADO_COMO_NUEVO,
+    estado: 'usado-como-nuevo',
     stock: 3,
   },
   {
@@ -16,7 +14,7 @@ export const catalogoInicial = [
     plataforma: 'SNES',
     categoria: 'RPG',
     precioBase: 120,
-    estado: ESTADOS.SOLO_CARTUCHO,
+    estado: 'solo-cartucho',
     stock: 1,
   },
   {
@@ -25,7 +23,7 @@ export const catalogoInicial = [
     plataforma: 'SNES',
     categoria: 'Lucha',
     precioBase: 50,
-    estado: ESTADOS.NUEVO_PRECINTADO,
+    estado: 'nuevo-precintado',
     stock: 1,
   },
   {
@@ -34,7 +32,7 @@ export const catalogoInicial = [
     plataforma: 'Mega Drive',
     categoria: 'Plataformas',
     precioBase: 25,
-    estado: ESTADOS.USADO_CAJA_DANADA,
+    estado: 'usado-caja-danada',
     stock: 4,
   },
   {
@@ -43,7 +41,7 @@ export const catalogoInicial = [
     plataforma: 'Mega Drive',
     categoria: 'Lucha',
     precioBase: 35,
-    estado: ESTADOS.SOLO_CARTUCHO,
+    estado: 'solo-cartucho',
     stock: 2,
   },
   {
@@ -52,7 +50,7 @@ export const catalogoInicial = [
     plataforma: 'PS1',
     categoria: 'RPG',
     precioBase: 60,
-    estado: ESTADOS.USADO_CAJA_DANADA,
+    estado: 'usado-caja-danada',
     stock: 2,
   },
   {
@@ -61,7 +59,7 @@ export const catalogoInicial = [
     plataforma: 'PS1',
     categoria: 'Lucha',
     precioBase: 30,
-    estado: ESTADOS.USADO_COMO_NUEVO,
+    estado: 'usado-como-nuevo',
     stock: 5,
   },
   {
@@ -70,7 +68,7 @@ export const catalogoInicial = [
     plataforma: 'N64',
     categoria: 'Carreras',
     precioBase: 55,
-    estado: ESTADOS.USADO_COMO_NUEVO,
+    estado: 'usado-como-nuevo',
     stock: 2,
   },
   {
@@ -79,7 +77,7 @@ export const catalogoInicial = [
     plataforma: 'N64',
     categoria: 'Deportes',
     precioBase: 40,
-    estado: ESTADOS.SOLO_CARTUCHO,
+    estado: 'solo-cartucho',
     stock: 2,
   },
   {
@@ -88,7 +86,7 @@ export const catalogoInicial = [
     plataforma: 'Game Boy',
     categoria: 'Puzzle',
     precioBase: 20,
-    estado: ESTADOS.NUEVO_PRECINTADO,
+    estado: 'nuevo-precintado',
     stock: 6,
   },
   {
@@ -97,7 +95,7 @@ export const catalogoInicial = [
     plataforma: 'Game Boy',
     categoria: 'RPG',
     precioBase: 55,
-    estado: ESTADOS.SOLO_CARTUCHO,
+    estado: 'solo-cartucho',
     stock: 3,
   },
   {
@@ -106,7 +104,7 @@ export const catalogoInicial = [
     plataforma: 'Game Boy',
     categoria: 'Plataformas',
     precioBase: 28,
-    estado: ESTADOS.USADO_CAJA_DANADA,
+    estado: 'usado-caja-danada',
     stock: 2,
   },
 ];

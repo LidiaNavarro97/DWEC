@@ -1,1 +1,11 @@
-// Punto de entrada de RetroStock
+import { catalogoInicial } from './data/catalogo.js';
+import { vender, mostrarCatalogo } from './reglas.js';
+
+vender(catalogoInicial[9], 1); 
+vender(catalogoInicial[1], 1); 
+vender(catalogoInicial[0], 2); 
+vender(catalogoInicial[3], 4);
+vender(catalogoInicial[2], 5); 
+
+mostrarCatalogo(catalogoInicial);
+
