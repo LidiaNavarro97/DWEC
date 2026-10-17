@@ -1,0 +1,10 @@
+{
+  "name": "dwec-refuerzo-p1",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "DWEC · Refuerzo de la Práctica 1. Todo se lanza con ./refuerzo.sh (no hace falta npm install).",
+  "scripts": {
+    "comprobar": "node comprobador/comprobar.mjs"
+  }
+}

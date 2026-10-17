@@ -1,0 +1,35 @@
+# DWEC · Refuerzo P1 · El entorno de la práctica en Docker.
+#
+# Un servicio es «una máquina» que Docker arranca a partir de una imagen.
+# 👀 EJEMPLO resuelto: el servicio `comprobador` (lo usa ./refuerzo.sh comprobar).
+# ✍️ TU TURNO: completa los ____ del servicio `web` (el servidor de Vite).
+name: dwec-refuerzo-p1
+
+services:
+
+  # 👀 EJEMPLO ─────────────────────────────────────────────────────────────
+  comprobador:
+    image: dwec-refuerzo-p1:1                 # la imagen que construye ./refuerzo.sh preparar
+    user: "${UID_ALUMNO:-1000}:${GID_ALUMNO:-1000}"   # los ficheros que cree serán tuyos, no de root
+    volumes:
+      - .:/app                                # tu carpeta del kit  →  /app dentro del contenedor
+    working_dir: /app                         # dónde se ejecuta la orden
+    command: ["node", "comprobador/comprobar.mjs"]
+    profiles: ["herramientas"]                # no se arranca con «up»: solo cuando se le llama
+
+  # ✍️ TU TURNO ────────────────────────────────────────────────────────────
+  web:
+    image: dwec-refuerzo-p1:1
+    user: "${UID_ALUMNO:-1000}:${GID_ALUMNO:-1000}"
+    # 1 · Monta tu carpeta del kit en /app, igual que en el ejemplo
+    volumes:
+      - .:/app
+    working_dir: /app
+    # 2 · Vite escucha DENTRO del contenedor en el puerto 5173.
+    #     Tú abrirás el navegador en http://localhost:6100  →  «PUERTO_DE_TU_PC:PUERTO_DEL_CONTENEDOR»
+    ports:
+      - "127.0.0.1:6100:5173"
+    # 3 · La orden que arranca Vite. --host 0.0.0.0 hace que se pueda llegar desde fuera del contenedor
+    command: ["vite", "--host", "0.0.0.0", "--port", "5173", "--strictPort"]
+    init: true
+    restart: unless-stopped
