@@ -3,6 +3,6 @@
 // 2 · Tiene que devolver exactamente:  Hola, <nombre>. ¡El entorno funciona!
 //     saludar("Lidia")  →  "Hola, Lidia. ¡El entorno funciona!"
 export function saludar(nombre) {
-  return `Hola ${nombre}. ¡El entorno funciona!`;
+  return `Hola, ${nombre}. ¡El entorno funciona!`;
 }
 
