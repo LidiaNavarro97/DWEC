@@ -13,7 +13,7 @@ export const PRODUCTOS = [
 // Total del ticket: suma precio × unidades de cada línea.
 export function totalTicket(lineas) {
   let total = 0;
-  for (let i = 1; i < lineas.length; i++) {
+  for (let i = 0; i < lineas.length; i++) {
     const linea = lineas[i];
     total = total + linea.precio * linea.unidades;
   }
@@ -23,8 +23,17 @@ export function totalTicket(lineas) {
 // Suma a las unidades que ya hay las que escribe el usuario en un prompt.
 // Si lo que escribe no es un número, las unidades se quedan como estaban.
 export function sumarUnidades(actuales, textoDelUsuario) {
-  const nuevas = actuales + textoDelUsuario;
-  return nuevas;
+  if(textoDelUsuario === null) {
+    return actuales;
+  }
+  
+  const numero = Number(textoDelUsuario);
+
+  if(Number.isNaN(numero)) {
+    return actuales;
+  }
+
+  return actuales + numero;
 }
 
 // Texto del stock de un producto para el listado. Si no tenemos el dato: "sin datos".

@@ -13,11 +13,22 @@ Ejemplo de cómo se escribe una variable vista en el panel «Ámbito» (Scope): 
 
 ## Bug 1 · Añadir unidades
 
-- **Síntoma:** ____
-- **Breakpoint en:** ____
-- **Lo que vi:** ____
-- **Por qué falla:** ____
-- **Arreglo:** ____
+- **Síntoma:** sale 23 en lugar de salir 5. 
+- **Breakpoint en:** `caja.js` la linea es 26 `export function sumarUnidades(actuales, textoDelUsuario)` `const nuevas = actuales + textoDelUsuario;`
+- **Lo que vi:** veo que cge el texto del usuario como "3" y no como 3.
+- **Por qué falla:** el problema es que texto del usuario lo coge como texto porque esta entre comillas y en vez de sumar lo concatena.
+- **Arreglo:** ponerlo como un numero y no como un texto, cambiar la funcion que habia por ->
+`if(textoDelUsuario === null) {
+    return actuales;
+  }
+  
+  const numero = Number(textoDelUsuario);
+
+  if(Number.isNaN(numero)) {
+    return actuales;
+  }
+
+  return actuales + numero;`
 
 ## Bug 2 · Stock de cada producto
 
