@@ -44,7 +44,7 @@ export function stockTexto(producto) {
 
 // Devuelve los productos ordenados de más barato a más caro (sin tocar la lista original).
 export function ordenarPorPrecio(productos) {
-  const ordenados = productos.sort((a, b) => a.precio - b.precio);
+  const ordenados = [...productos].sort((a, b) => a.precio - b.precio);
   return ordenados;
 }
 
@@ -52,7 +52,7 @@ export function ordenarPorPrecio(productos) {
 // 1 unidad → 0 % · de 2 a 3 → 5 % · 4 o más → 10 %. Redondeado a 2 decimales.
 export function precioConDescuento(precio, unidades) {
   let descuento = 0;
-  if (unidades > 4) {
+  if (unidades >= 4) {
     descuento = 0.1;
   } else if (unidades >= 2) {
     descuento = 0.05;

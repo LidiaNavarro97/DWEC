@@ -47,16 +47,16 @@ que es lo que hago:
 
 ## Bug 3 · Ordenar por precio
 
-- **Síntoma:** ____
-- **Breakpoint en:** ____
-- **Lo que vi:** ____
-- **Por qué falla:** ____
-- **Arreglo:** ____
+- **Síntoma:** se ordenan bien pero se modificaba la lista original
+- **Breakpoint en:** en la linea 47
+- **Lo que vi:** `productos.sort`ordenaba de menor a mayor pero cambiaba la lista original
+- **Por qué falla:** porque nos pide q no se modifique la lista original
+- **Arreglo:** crear una copia de la lista con `[...productos].sort`
 
 ## Bug 4 · Descuento por volumen
 
-- **Síntoma:** ____
-- **Breakpoint en:** ____ *(prueba un breakpoint condicional: `unidades === 4`)*
-- **Lo que vi:** ____
-- **Por qué falla:** ____
-- **Arreglo:** ____
+- **Síntoma:** al comprar 4 unidades se descontaba un 5% en lugar de un 10%
+- **Breakpoint en:** la linea 55
+- **Lo que vi:** con unidades === 4 la condicion de 4>4 es falsa asi q salta al else if y coge un 5%
+- **Por qué falla:** porque con esa condicion no coge exactamente el 4 sino mas mayor
+- **Arreglo:** cambiar esa linea a -> `unidades = >= 4`
