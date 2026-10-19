@@ -38,11 +38,12 @@ que es lo que hago:
 
 ## Bug 2 · Stock de cada producto
 
-- **Síntoma:** ____
-- **Breakpoint en:** ____
-- **Lo que vi:** ____
-- **Por qué falla:** ____
-- **Arreglo:** ____
+- **Síntoma:** aparecia "sin datos" cuanado debia dar 0
+- **Breakpoint en:** `caja.js` en la linea 41 (`const stock = producto.stock || "sin datos";`)
+- **Lo que vi:** el producto tiene stock 0 pero la linea lo convierte en sin datos
+- **Por qué falla:** los || se queda con el valor de la derecha si el de la izquierda es falsy y el 0 lo es por eso da sin datos.
+- **Arreglo:** ponemos ?? en vez de ||, porque ?? se queda con el valor de la derecha si el de la izquierda es null o undefined, y el 0 cuenta como un dato asi que daria 0. ->
+`const stock = producto.stock ?? "sin datos";`
 
 ## Bug 3 · Ordenar por precio
 

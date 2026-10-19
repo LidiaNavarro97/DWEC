@@ -38,7 +38,7 @@ export function sumarUnidades(actuales, textoDelUsuario) {
 
 // Texto del stock de un producto para el listado. Si no tenemos el dato: "sin datos".
 export function stockTexto(producto) {
-  const stock = producto.stock || "sin datos";
+  const stock = producto.stock ?? "sin datos";
   return `${stock}`;
 }
 
