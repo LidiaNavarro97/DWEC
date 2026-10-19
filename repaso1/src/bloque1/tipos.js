@@ -18,21 +18,21 @@ export function formatearUnidades(unidades) {
 // 🪜 1.a · ¿Es un texto? Usa typeof.
 //    esTexto("3") → true     esTexto(3) → false     esTexto(null) → false
 export function esTexto(valor) {
-  throw new Error("Sin hacer");
+  return typeof valor === "string";  
 }
 
 // 🪜 1.b · Sumar dos números que llegan como TEXTO (como los de un prompt)
 //    sumarTextos("3", "4") → 7       (no "34": mira la predicción p1)
 //    sumarTextos("2.5", "1") → 3.5
 export function sumarTextos(a, b) {
-  throw new Error("Sin hacer");
+  return Number(a) + Number(b);
 }
 
 // 🪜 1.c · Un valor, o uno por defecto si NO viene (null o undefined). El 0 y el "" SÍ son valores.
 //    valorODefecto(0, 10) → 0      valorODefecto(undefined, 10) → 10
 //    valorODefecto(null, "x") → "x"    valorODefecto("", "x") → ""
 export function valorODefecto(valor, defecto) {
-  throw new Error("Sin hacer");
+  return valor ?? defecto;
 }
 
 // ✍️ 1.1 · Formatear un precio en euros, con 2 decimales y coma
