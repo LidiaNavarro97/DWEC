@@ -9,14 +9,14 @@
 //     Apunta lo que no entiendas: es justo lo que tienes que repasar.
 
 export const predicciones = {
-  p1: undefined, //  "5" + 3
-  p2: undefined, //  "5" * 3
-  p3: undefined, //  3 + "3" === "33"
-  p4: undefined, //  NaN || 1
-  p5: undefined, //  NaN ?? 1
-  p6: undefined, //  "" || "sin nombre"
-  p7: undefined, //  Number("")
-  p8: undefined, //  Number("12,5")
-  p9: undefined, //  0.1 + 0.2 === 0.3
-  p10: undefined, // const p = { titulo: "Tetris" };   p.precio?.toFixed(2) ?? "sin precio"
+  p1: "53", //  "5" + 3
+  p2: (15), //  "5" * 3
+  p3: true, //  3 + "3" === "33" -> primero hace la suma y luego compara 33===33
+  p4: (1), //  NaN || 1
+  p5: NaN, //  NaN ?? 1
+  p6: ("sin nombre"), //  "" || "sin nombre"
+  p7: (0), //  Number("") -> convierte la cadena vacia en 0
+  p8: NaN, //  Number("12,5")
+  p9: false, //  0.1 + 0.2 === 0.3
+  p10: "sin precio" , // const p = { titulo: "Tetris" };   p.precio?.toFixed(2) ?? "sin precio" -> p.precio no existe asi que ?. evita el error y ?? devuelve el texto alternativo
 };
