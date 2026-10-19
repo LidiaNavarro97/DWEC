@@ -16,8 +16,14 @@ Ejemplo de cómo se escribe una variable vista en el panel «Ámbito» (Scope): 
 - **Síntoma:** sale 23 en lugar de salir 5. 
 - **Breakpoint en:** `caja.js` la linea es 26 `export function sumarUnidades(actuales, textoDelUsuario)` `const nuevas = actuales + textoDelUsuario;`
 - **Lo que vi:** veo que cge el texto del usuario como "3" y no como 3.
-- **Por qué falla:** el problema es que texto del usuario lo coge como texto porque esta entre comillas y en vez de sumar lo concatena.
+- **Por qué falla:** el problema es que texto del usuario lo coge como texto porque esta entre comillas y en vez de sumar lo concatena, y aparte el signo + con un texto al lado lo concatena en vez de sumanrlo y promt siempre devuelve texto aunq escruba un numero.
 - **Arreglo:** ponerlo como un numero y no como un texto, cambiar la funcion que habia por ->
+
+que es lo que hago:
+1. convertir con Number antes de sumar
+2. si el usuario cancela promt da null y devuelve actuales antes de convertir porque Number(null) da 0
+3. si escribe hola da NaN y tmb se devuelve actuales (se detecta con Number.isNaN)
+
 `if(textoDelUsuario === null) {
     return actuales;
   }
