@@ -26,6 +26,7 @@ export function contarSi(lista, condicion) {
       cuantos++;
     }
   }
+  
   return cuantos;
 }
 
