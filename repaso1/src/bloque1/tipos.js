@@ -39,7 +39,8 @@ export function valorODefecto(valor, defecto) {
 //    formatearEuros(42.75) → "42,75 €"     formatearEuros(5) → "5,00 €"     formatearEuros(0) → "0,00 €"
 //    Pista: toFixed(2) y replace. Mira cómo usa el ejemplo 2 la plantilla `${...}`.
 export function formatearEuros(numero) {
-  throw new Error("Sin hacer");
+  const formateo = numero.toFixed(2).replace(".",",");
+  return `${formateo} €`;
 }
 
 // ✍️ 1.2 · Convertir lo que escribe el usuario en un prompt en un número
@@ -48,7 +49,28 @@ export function formatearEuros(numero) {
 //    aNumero("") → null      aNumero("hola") → null      aNumero(null) → null
 //    Pistas: trim(), replace(",", "."), Number() y Number.isNaN(). Mira las predicciones p7 y p8.
 export function aNumero(texto) {
-  throw new Error("Sin hacer");
+  
+  //comprobar si es null, y si pulsa cancelar devuelve null
+  if (texto === null) {
+    return null;
+  }
+  //con trim quitamos los espacios del principio y final, y replace sustituye la , por un .
+  texto = texto.trim().replace(",",".");
+
+  //compruebo si esta vacio, sino escribe nada se devuelve null
+  if(texto === "") {
+    return null;
+  }
+  //Number convierte el texto en numero, "3" lo convierte a 3
+  const numero = Number(texto);
+
+  // comprobar si esa conversion ha fallado, eso comprueba si el resultado es NaN, osea que no es un numero valido
+  if (Number.isNaN(numero)) {
+    return null;
+  }
+  //devolvemos el numero
+  return numero;
+
 }
 
 // ✍️ 1.3 · El stock de un producto, que puede no venir
@@ -58,13 +80,21 @@ export function aNumero(texto) {
 //    stockVisible(undefined)                      → "sin datos"   (el producto no existe)
 //    Pista: ?. y ¿|| o ??? Mira el escalón 1.c y la predicción p10.
 export function stockVisible(producto) {
-  throw new Error("Sin hacer");
-}
+  return producto?.stock ?? "sin datos";
+} // el .? comprueba si el producto existe antes de acceder a stock
+  // el ?? devuelve "sin datos", solo si lo de la izq es null o undefined
+
 
 // ✍️ 1.4 · Nombre corto de un producto:  "Tetris (GAME BOY)"
 //    Si el título está vacío ("") o no viene → "Sin título (GAME BOY)"
 //    Si no viene la plataforma             → "Tetris (?)"
 //    Aquí un título vacío NO vale como título: ¿qué operador conviene para cada caso? Mira p6.
 export function nombreCorto(producto) {
-  throw new Error("Sin hacer");
+  //uso || porque un titulo vacio no es valido, si no existe o esta vacio hace lo de la derecha
+  const titulo = producto?.titulo || "Sin título";
+  // queremos lo de la derecha cuando sea null o undefined pero conservar otros valores validos
+  const plataforma = producto?.plataforma ?? "?";
+
+  // las comillas invertidas permiten combinar el texto y variabbles usando ${...}
+  return `${titulo} (${plataforma})`;
 }
