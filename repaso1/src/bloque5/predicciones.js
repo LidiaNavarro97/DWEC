@@ -19,3 +19,4 @@ export const predicciones = {
   p9: 0, // stock
   p10: [16,24], // numeros.map((n) => n * 2).filter((n) => n > 12)
 };
+

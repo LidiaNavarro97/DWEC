@@ -6,7 +6,8 @@ import { redondear, formatearUnidades } from "../bloque1/tipos.js";
 
 // 👀 EJEMPLO 1 · map: un array del MISMO tamaño, transformado
 //    titulos(CATALOGO) → ["Tetris", "Zelda: A Link to the Past", ...]
-export const titulos = (catalogo) => catalogo.map((producto) => producto.titulo);
+export const titulos = (catalogo) =>
+   catalogo.map((producto) => producto.titulo);
 
 // 👀 EJEMPLO 2 · filter: los que cumplen la condición (puede devolver [] si ninguno)
 //    deCategoria(CATALOGO, "RPG") → [ {id: 2 ...}, {id: 7 ...} ]
@@ -17,7 +18,8 @@ export const deCategoria = (catalogo, categoria) =>
 //    reponer(CATALOGO, 3, 10) → array nuevo donde Sonic 2 tiene stock 10; CATALOGO no cambia
 export const reponer = (catalogo, id, unidades) =>
   catalogo.map((producto) =>
-    producto.id === id ? { ...producto, stock: producto.stock + unidades } : producto,
+    producto.id === id ? 
+        { ...producto, stock: producto.stock + unidades } : producto,
   );
 
 // 🪜 ESCALERA · Un método cada vez, con arrays de números (las pruebas usan arrays congelados)
@@ -25,13 +27,15 @@ export const reponer = (catalogo, id, unidades) =>
 // 🪜 5.a · map: cada número multiplicado por 2
 //    dobles([1, 5, 10]) → [2, 10, 20]       dobles([]) → []
 export const dobles = (numeros) => {
-  throw new Error("Sin hacer");
+  const multiplicados = numeros.map((n) => n * 2);
+  return multiplicados;
 };
 
 // 🪜 5.b · filter: los mayores que un límite
 //    mayoresQue([3, 8, 1, 12], 5) → [8, 12]       mayoresQue([1, 2], 5) → []
 export const mayoresQue = (numeros, limite) => {
-  throw new Error("Sin hacer");
+  const mayores = numeros.filter((n) => n > limite );
+  return mayores;
 };
 
 // 🪜 5.c · reduce: la suma de todos (0 si está vacío)
