@@ -38,7 +38,7 @@ export function procesarSemaforo(colores) {
 // 🪜 4.a · if / else if / else
 //    signo(5) → "positivo"     signo(-3) → "negativo"     signo(0) → "cero"
 export function signo(numero) {
-  
+
   if(numero > 0){
     return "positivo";
 
@@ -54,14 +54,28 @@ export function signo(numero) {
 // 🪜 4.b · Bucle for con acumulador: suma de 1 hasta n
 //    sumarHasta(4) → 10   (1 + 2 + 3 + 4)       sumarHasta(1) → 1       sumarHasta(0) → 0
 export function sumarHasta(n) {
-  throw new Error("Sin hacer");
+  
+  let suma = 0;
+
+  for (let i = 1; i <= n; i++) {
+    suma += i;
+  }
+  return suma;
 }
 
 // 🪜 4.c · for...of sobre un TEXTO (también se recorre letra a letra): cuenta las vocales a e i o u
 //    contarVocales("Tetris") → 2     contarVocales("AEIOU") → 5 (también mayúsculas)    contarVocales("") → 0
 //    Pista: "aeiou".includes(letra.toLowerCase())
 export function contarVocales(texto) {
-  throw new Error("Sin hacer");
+  
+  let contador = 0;
+
+  for(const letras of texto){
+    if("aeiou".includes(letras.toLowerCase())){
+      contador ++;
+    }
+  }
+  return contador;
 }
 
 // ✍️ 4.1 · Clasificar el stock con if / else if / else
