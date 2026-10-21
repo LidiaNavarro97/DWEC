@@ -28,22 +28,48 @@ export function crearMarcador() {
 //    const triplicar = crearMultiplicador(3);
 //    triplicar(4) → 12       crearMultiplicador(10)(5) → 50
 export function crearMultiplicador(factor) {
-  throw new Error("Sin hacer");
+  return function (numero){
+    return numero * factor;
+  }
 }
+
+const triplicar = crearMultiplicador(3);
+triplicar(4);
 
 // 🪜 3.b · Un objeto con DOS funciones que comparten una variable privada que SÍ cambia
 //    const ficha = crearPasos(2);       // avanza de 2 en 2
 //    ficha.avanzar() → 2    ficha.avanzar() → 4    ficha.posicion() → 4
 //    crearPasos().avanzar() → 1         (de 1 en 1 si no se dice nada)
 export function crearPasos(paso) {
-  throw new Error("Sin hacer");
+  
+  let posicion = 0;
+
+  return {
+    avanzar() {
+      posicion += paso;
+      return posicion;
+    },
+    posicion() {
+      return posicion;
+    }
+  }
 }
+
+const ficha = crearPasos(2);
+
+ficha.avanzar();
+ficha.avanzar();
+ficha.posicion();
+crearPasos().avanzar();
 
 // ✍️ 3.1 · Una función que devuelve una función que calcula un descuento
 //    const rebajas = crearDescuento(20);
 //    rebajas(50) → 40     rebajas(19.99) → 15.99     crearDescuento(0)(10) → 10
 export function crearDescuento(porcentaje) {
-  throw new Error("Sin hacer");
+  return function (precio) {
+    const descuento = precio * (1 - porcentaje / 100);
+    return Math.round(descuento * 100) / 100;
+  }
 }
 
 // ✍️ 3.2 · La lista de deseos de un cliente, privada (como el marcador del ejemplo)

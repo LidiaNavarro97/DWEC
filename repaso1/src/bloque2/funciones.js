@@ -86,7 +86,7 @@ export const crearProducto = (id, titulo, precio, stock = 0) => ({
 // ✍️ 2.4 · Parámetro REST: suma todos los importes que le pases, los que sean.
 //    sumarImportes(10, 20.5, 4) → 34.5      sumarImportes() → 0
 //    Hazlo con for...of (el reduce es del bloque 5). Ahora mismo el parámetro NO es rest: cámbialo.
-export function sumarImportes(...importes) {
+export function sumarImportes(...importes) { // los ... permiten recibir muchos argumentos y los guarda en un array llamado importes
   let suma = 0;
 
   for(const i of importes) {
@@ -103,9 +103,9 @@ export function sumarImportes(...importes) {
 //    buscarCon([{ id: 1 }, { id: 2 }], (p) => p.id === 2) → { id: 2 }
 export function buscarCon(lista, condicion) {
 
-  for(const busqueda of lista){
-    if(condicion(busqueda)){
-      return busqueda;
+  for(const n of lista){
+    if(condicion(n)){
+      return n;
     }
   }
   
