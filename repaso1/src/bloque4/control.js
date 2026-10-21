@@ -38,7 +38,17 @@ export function procesarSemaforo(colores) {
 // 🪜 4.a · if / else if / else
 //    signo(5) → "positivo"     signo(-3) → "negativo"     signo(0) → "cero"
 export function signo(numero) {
-  throw new Error("Sin hacer");
+  
+  if(numero > 0){
+    return "positivo";
+
+  } else if(numero < 0) {
+    return "negativo";
+
+  } else {
+    return "cero";
+  }
+  
 }
 
 // 🪜 4.b · Bucle for con acumulador: suma de 1 hasta n

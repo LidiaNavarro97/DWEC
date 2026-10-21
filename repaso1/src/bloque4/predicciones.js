@@ -23,11 +23,11 @@
 //   do { veces++; } while (veces < 0);
 
 export const predicciones = {
-  p1: undefined, // r
-  p2: undefined, // n
-  p3: undefined, // suma
-  p4: undefined, // claves         ⚠️ for...IN, no for...of
-  p5: undefined, // stock && "hay unidades"
-  p6: undefined, // stock > 0 ? "hay" : "agotado"
-  p7: undefined, // veces          ⚠️ do...while
+  p1: "bc", // r
+  p2: 3, // n
+  p3: 10, // suma
+  p4: ["0", "1"], // claves         ⚠️ for...IN, no for...of
+  p5: 0, // stock && "hay unidades"
+  p6: "agotado", // stock > 0 ? "hay" : "agotado"
+  p7: 1, // veces          ⚠️ do...while
 };
