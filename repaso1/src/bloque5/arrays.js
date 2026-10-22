@@ -41,33 +41,40 @@ export const mayoresQue = (numeros, limite) => {
 // 🪜 5.c · reduce: la suma de todos (0 si está vacío)
 //    sumaTotal([3, 8, 1]) → 12      sumaTotal([]) → 0
 export const sumaTotal = (numeros) => {
-  throw new Error("Sin hacer");
+  const suma = numeros.reduce((acc, elemento) => acc + elemento, 0);
+  return suma;
 };
 
 // 🪜 5.d · Añadir al final SIN modificar la lista (nada de push): spread
 //    anadirAlFinal(["a", "b"], "c") → ["a", "b", "c"]   y la lista original sigue con 2
 export const anadirAlFinal = (lista, elemento) => {
-  throw new Error("Sin hacer");
+     const list = [...lista, elemento];
+     return list;
 };
 
 // ✍️ 5.1 · find: el producto con ese id, o null si no existe (nunca undefined)
 //    buscarPorId(CATALOGO, 4) → { id: 4, titulo: "Crash Bandicoot", ... }     buscarPorId(CATALOGO, 99) → null
 export function buscarPorId(catalogo, id) {
-  throw new Error("Sin hacer");
-}
+  const elemento = catalogo.find((producto) => producto.id === id);
+  return elemento ?? null;
+};
 
 // ✍️ 5.2 · filter: los productos cuyo título CONTIENE el texto, sin distinguir mayúsculas
 //    buscarPorTitulo(CATALOGO, "mario") → [Super Mario 64, Dr. Mario]     buscarPorTitulo(CATALOGO, "xyz") → []
 export function buscarPorTitulo(catalogo, texto) {
-  throw new Error("Sin hacer");
+  
 }
 
 // ✍️ 5.3 · reduce: valor del stock = suma de precio × stock, redondeado
 //    valorStock(CATALOGO) → 750       valorStock([]) → 0
 //    ⚠️ Con reduce, no con un for. Y no olvides el valor inicial (prueba [].reduce((a, n) => a + n) en la consola).
 export function valorStock(catalogo) {
-  throw new Error("Sin hacer");
-}
+  const valor = catalogo.reduce((acc , elemento) => {
+    return elemento.precio * elemento.stock + acc;
+  }, 0)
+
+  return Math.round(valor * 100) / 100;
+};
 
 // ✍️ 5.4 · sort con comparador, SIN tocar el original: de más barato a más caro
 //    ordenarPorPrecio(CATALOGO).map((p) => p.precio) → [10, 15, 20, 25, 30, 35, 40, 60]
