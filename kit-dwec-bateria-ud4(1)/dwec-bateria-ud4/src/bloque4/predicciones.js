@@ -1,4 +1,4 @@
-// 🔮 PREDICCIONES · Cambia cada undefined por lo que crees que da. Luego: ./bateria.sh comprobar 4
+// 🔮 PREDICCIONES · Cambia cada undefined por lo que crees que da. Luego: docker compose run --rm web npm run comprobar 4
 // Para las tres primeras:  class A { hola() { return "A"; } }
 //                          class B extends A { hola() { return "B" + super.hola(); } }
 export const predicciones = {

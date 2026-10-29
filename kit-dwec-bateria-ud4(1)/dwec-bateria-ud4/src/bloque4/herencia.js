@@ -1,6 +1,6 @@
 // Bloque 4 · Herencia (extends, super) y polimorfismo
 // Explicación: web → 4.1 Batería → Bloque 4 (y el apartado 8 de la UD4).
-// Comprueba con:  ./bateria.sh comprobar 4
+// Comprueba con:  docker compose run --rm web npm run comprobar 4
 
 // 👀 EJEMPLO RESUELTO: la clase base ──────────────────────────────────────────
 export class Publicacion {

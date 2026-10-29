@@ -1,4 +1,4 @@
-// 🔮 PREDICCIONES · Cambia cada undefined por lo que crees que da. Luego: ./bateria.sh comprobar 5
+// 🔮 PREDICCIONES · Cambia cada undefined por lo que crees que da. Luego: docker compose run --rm web npm run comprobar 5
 export const predicciones = {
   p1: undefined, // new Map([["a", 1]]).size
   p2: undefined, // new Set([1, 1, 2]).size

@@ -1,6 +1,6 @@
 // Bloque 6 · Integrador: la biblioteca del instituto
 // Une lo de los bloques 4 (publicaciones) y 5 (socios y PrestamoError). Explicación: web → 4.1 Batería → Bloque 6.
-// Comprueba con:  ./bateria.sh comprobar 6
+// Comprueba con:  docker compose run --rm web npm run comprobar 6
 import { PrestamoError, Socio } from "../bloque5/composicion.js";
 
 // ✍️ La clase Biblioteca, con todo en campos PRIVADOS (pista: tres Map):

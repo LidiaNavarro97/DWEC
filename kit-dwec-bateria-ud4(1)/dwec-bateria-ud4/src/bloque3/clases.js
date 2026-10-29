@@ -1,6 +1,6 @@
 // Bloque 3 · Clases: constructor que valida, getters/setters, campos #privados, static y el this perdido
 // Explicación: web → 4.1 Batería → Bloque 3 (y el apartado 7 de la UD4).
-// Comprueba con:  ./bateria.sh comprobar 3
+// Comprueba con:  docker compose run --rm web npm run comprobar 3
 
 // 👀 EJEMPLO RESUELTO ─────────────────────────────────────────────────────────
 // Un campo privado (#valor) que solo se puede leer con un getter y cambiar con un método.

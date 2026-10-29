@@ -1,6 +1,6 @@
 // Bloque 5 · Composición, Map, Date, Intl y errores propios
 // Explicación: web → 4.1 Batería → Bloque 5 (y los apartados 9 y 10 de la UD4).
-// Comprueba con:  ./bateria.sh comprobar 5
+// Comprueba con:  docker compose run --rm web npm run comprobar 5
 
 // 👀 EJEMPLO RESUELTO: un error propio ────────────────────────────────────────
 // Heredar de Error permite distinguir «un préstamo no permitido» (se le explica al usuario) de un fallo del programa.

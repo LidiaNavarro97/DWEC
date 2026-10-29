@@ -1,6 +1,6 @@
 // Bloque 2 · Prototipos: lo que hay debajo de class
 // Explicación: web → 4.1 Batería → Bloque 2 (y el apartado 6 de la UD4).
-// Comprueba con:  ./bateria.sh comprobar 2
+// Comprueba con:  docker compose run --rm web npm run comprobar 2
 
 // 👀 EJEMPLO RESUELTO ─────────────────────────────────────────────────────────
 // La forma clásica: una función constructora + el método en su prototype (UNA vez para todos).
@@ -14,28 +14,21 @@ Lector.prototype.saludar = function () {
 // 🪜 ESCALERA ──────────────────────────────────────────────────────────────────
 // 🪜 1 · ¿Es una propiedad PROPIA del objeto?   esPropia(Object.create({ a: 1 }), "a") → false
 export function esPropia(objeto, clave) {
-  return Object.hasOwn(objeto, clave);
+  throw new Error("Sin hacer");
 }
 
 // 🪜 2 · ¿Se encuentra la propiedad en el objeto O en su cadena de prototipos?
 //        estaEnLaCadena({}, "toString") → true      (pista: el operador in)
 export function estaEnLaCadena(objeto, clave) {
-  return clave in objeto;
+  throw new Error("Sin hacer");
 }
 
 // ✍️ TU TURNO ─────────────────────────────────────────────────────────────────
 // ✍️ 1 · Escribe la función constructora Socio(nombre, curso), igual que Lector, con un método
 //        presentarse() que devuelva "Soy Ana, de 2º DAW". El método NO puede estar dentro de cada socio.
 export function Socio(nombre, curso) {
-
-  this.nombre = nombre;
-  this.curso = curso;
-} 
-Socio.prototype.presentarse = function() {
-    return "Soy " + this.nombre + ", de " + this.curso;  
-}    
-  
-
+  throw new Error("Sin hacer");
+}
 
 // ✍️ 2 · Crea un objeto cuyo PROTOTIPO sea `base` (no una copia) y que tenga una propiedad propia nombre.
 //        Lo de base (por ejemplo un método saludo) tiene que funcionar en el objeto nuevo sin copiarlo.

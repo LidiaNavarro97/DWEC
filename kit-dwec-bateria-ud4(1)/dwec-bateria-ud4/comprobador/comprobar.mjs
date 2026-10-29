@@ -1,4 +1,4 @@
-// comprobar.mjs — El comprobador de la batería de la UD4. Lo lanza ./bateria.sh comprobar [bloque]
+// comprobar.mjs — El comprobador de la batería de la UD4. Lo lanza: docker compose run --rm web npm run comprobar [bloque]
 // Te dice qué llevas bien y qué te falta. NO te da la solución: te dice qué caso falla.
 //
 //   node comprobador/comprobar.mjs            → todos los bloques
@@ -8,7 +8,7 @@ import { spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { BLOQUES } from "./pruebas.mjs";
+import { BLOQUES, EMPEZAR } from "./pruebas.mjs";
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), "..");
 const args = process.argv.slice(2);
@@ -55,7 +55,7 @@ if (args[0] === "--hijo") {
       id: bloque.id.toUpperCase(),
       texto: "Cargar los ficheros del bloque",
       estado: "mal",
-      detalle: `💥 No se puede cargar: ${error.name}: ${error.message}${dondeEsta(error, Object.values(bloque.modulos ?? {}))}`,
+      detalle: `💥 No se puede cargar: ${error.name}: ${error.message}${dondeEsta(error, Object.values(bloque.modulos ?? {}))}${/Private field|private/i.test(error.message) ? " → un campo #privado se declara arriba de la clase (#paginas;) antes de usarlo" : ""}`,
     });
     modulos = null;
   }
@@ -87,6 +87,12 @@ if (args[0] === "--hijo") {
         } else if (/Invalid array length|Maximum call stack|heap out of memory/.test(error?.message ?? "")) {
           estado = "mal";
           detalle = `💥 ${error.name}: ${error.message} → ¿un bucle que no termina? (en un while, ¿avanza el contador?)`;
+        } else if (/reading '(set|get|has|delete|size|values)'/.test(error?.message ?? "")) {
+          estado = "mal";
+          detalle = `💥 ${error.name}: ${error.message} → ¿has creado el Map? Arriba de la clase: #nombre = new Map();`;
+        } else if (/is not a constructor|Class constructor .* without 'new'/.test(error?.message ?? "")) {
+          estado = "mal";
+          detalle = `💥 ${error.name}: ${error.message} → ¿está bien escrito y exportado (export class / export function)?`;
         } else {
           estado = "mal";
           detalle = `💥 ${error?.name ?? "Error"}: ${error?.message ?? error}`;
@@ -118,6 +124,7 @@ const salida = (t = "") => {
   lineas.push(t.replace(/\x1b\[[0-9;]*m/g, ""));
 };
 
+let pistaDada = false;
 let totalBien = 0;
 let totalObligatorias = 0;
 const resumen = [];
@@ -160,10 +167,16 @@ for (const bloque of elegidos) {
     const etiqueta = r.opcional ? c("2", " (opcional)") : "";
     salida(`  ${ICONO[r.estado]} ${c("1", r.id.padEnd(5))} ${r.texto}${etiqueta}`);
     if (r.detalle) salida(`         ${r.estado === "mal" ? c("31", r.detalle) : c("33", r.detalle)}`);
+    // 💡 Comprobando UN bloque: en cada ejercicio sin hacer o que falla. Comprobando todos: solo en el primero sin hacer
+    if (EMPEZAR[r.id] && (filtro ? r.estado === "pendiente" || r.estado === "mal" : r.estado === "pendiente" && !pistaDada)) {
+      salida(c("36", `         💡 ${EMPEZAR[r.id]}`));
+      if (!filtro) salida(c("2", `            (con «npm run comprobar ${bloque.id}», un 💡 en cada ejercicio; paso a paso: «🆘 ¿Atascado?» en la web)`));
+      pistaDada = true;
+    }
     // Las explicaciones de las predicciones solo se enseñan al comprobar UN bloque (si no, sería eterno)
     if (r.info?.length) {
       if (filtro) for (const linea of r.info) salida(`         ${linea}`);
-      else salida(c("2", `         (./bateria.sh comprobar ${bloque.id} para ver el porqué de cada una)`));
+      else salida(c("2", `         (docker compose run --rm web npm run comprobar ${bloque.id} para ver el porqué de cada una)`));
     }
     if (!r.opcional) {
       obligatorias++;
