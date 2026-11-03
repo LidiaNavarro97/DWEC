@@ -12,6 +12,8 @@ export default [
       "prefer-const": "error",
       eqeqeq: ["error", "always"],
       "no-console": "warn",
+      // Aviso, no error: los huecos «Sin hacer» tienen parámetros que aún no usas. Al resolverlos desaparecen.
+      "no-unused-vars": "warn",
     },
   },
 ];
