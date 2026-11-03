@@ -1,0 +1,15 @@
+{
+  "name": "dwec-bateria-ud4",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "DWEC · Batería de ejercicios de la UD4 (opcional). Todo se lanza con docker compose.",
+  "scripts": {
+    "dev": "vite",
+    "comprobar": "node comprobador/comprobar.mjs",
+    "probar": "node comprobador/probar.mjs"
+  },
+  "devDependencies": {
+    "vite": "8.3.4"
+  }
+}
