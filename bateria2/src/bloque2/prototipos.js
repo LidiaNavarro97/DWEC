@@ -36,16 +36,25 @@ Socio.prototype.presentarse = function() {
 }    
   
 
-
 // ✍️ 2 · Crea un objeto cuyo PROTOTIPO sea `base` (no una copia) y que tenga una propiedad propia nombre.
 //        Lo de base (por ejemplo un método saludo) tiene que funcionar en el objeto nuevo sin copiarlo.
 export function crearDesde(base, nombre) {
-  throw new Error("Sin hacer");
-}
+  const nuevo = Object.create(base); //creo un objeto nuevo q su propotipo es base 
+  nuevo.nombre = nombre; //añado una propiedad propia
+  return nuevo; // devuelvo el objeto
+};
+
 
 // ✍️ 3 · ¿Cuántos prototipos hay por encima del objeto hasta llegar a null?
 //        niveles({}) → 1 (Object.prototype) · niveles(Object.create(null)) → 0 · niveles(new Lector("x")) → 2
 //        (pista: Object.getPrototypeOf en un bucle)
 export function niveles(objeto) {
-  throw new Error("Sin hacer");
+  let contador = 0; // inicio el contador
+  let actual = Object.getPrototypeOf(objeto); // aqui obtengo el prototipo del objeto que recibo
+
+  while (actual !== null) { // // el bucle se repite mientras actual sea diferente de null
+    contador++; // cada vez q encontremos un prototipo lo sumamos al contador
+    actual = Object.getPrototypeOf(actual); // se busca el siguiente prototipo, obtengo el prototipo del prototipo que tengo actualmente 
+  }
+  return contador; // devuelvo el resultado
 }
