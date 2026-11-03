@@ -5,22 +5,72 @@ import { Tarea } from "./Tarea.js";
 
 export class Columna {
   // Privado: #tareas, un array
+  #tareas = [];
 
   constructor(nombre, limiteWip = null) {
     // 1 · nombre: texto no vacío (sin espacios a los lados) → si no, TypeError
-    //     limiteWip: null (sin límite) o un entero ≥ 1 → si no, RangeError
-    throw new Error("Sin hacer");
+    if(typeof nombre !== "string" || nombre.trim() === ""){
+      throw new TypeError("El nombre no puede tener espacios. ")
+    }
+    // limiteWip: null (sin límite) o un entero ≥ 1 → si no, RangeError
+    if(limiteWip !== null && (!Number.isInteger(limiteWip) || limiteWip <= 1)){
+      throw new RangeError("El limite debe ser un entero mayor o igual a 1. ")
+    }
+
+    // guardamos los valores en el objeto
+    this.nombre = nombre.trim();
+    this.limiteWip = limiteWip;
   }
 
   // 2 · get llena: true si hay límite y ya hay tantas tareas como el límite
+  get llena(){
+    return this.limiteWip !== null && this.#tareas.length >= this.limiteWip;
+  }
 
   // 3 · get tareas: una COPIA del array (que nadie pueda tocar el tuyo desde fuera)
+  get tareas(){
+    return [...this.#tareas];
+  }
 
   // 4 · añadir(tarea): TypeError si no es instanceof Tarea · Error («… está llena …») si está
   //     llena · si no, la guarda y la devuelve
+  añadir(tarea){
+
+    if(!(tarea instanceof Tarea)){ // comprueba si tarea es una instancia de la clase Tarea
+      throw new TypeError("Tarea invalida.")
+    }
+
+    if(this.llena){ // comprobamos si la columna esta llena
+      throw new TypeError("Está llena.")
+    }
+
+    this.#tareas.push(tarea); //añado la tarea al final del array
+
+    return tarea; // devuelvo la tarea que acabo de añadir
+  }
 
   // 5 · quitar(id): la saca del array y la devuelve · Error («… no está …») si no la encuentra
   //     Pista: findIndex + splice
+  // splice -> cambia el contenido de un array eliminando elementos existentes y/o agregando nuevos
+  // findIndex -> devuelve el indice del primer elemento de un array que cumpla con la funcion sino devuelve -1
+
+  quitar(id){
+    // busca el indice de un elemento que cumpla la condicion
+    // busca la tarea cuyo id coincida con el que hemos recibido
+    const indice = this.#tareas.findIndex(tarea => tarea.id === id);
+
+    //sino lo encuentra da -1
+    if(indice === -1){ // si no lo encuentra da ese error
+      throw new TypeError("La tarea no está.")
+    } 
+    
+    // splice modifica el array original
+    // indice es la posicion que queremos eliminar
+    // y 1 es la cantidad de elementos que queremos eliminar
+    return this.#tareas.splice(indice,1)[0]; 
+    // [0] -> queremos devolver la tarea y no un array, ponemos [0] para acceder al primer elemento
+    
+  }
   // 6 · tiene(id): true / false. Pista: some
 
   // 7 · ordenadas(): un array NUEVO ordenado: primero prioridad alta (usa t.peso), y a igual
