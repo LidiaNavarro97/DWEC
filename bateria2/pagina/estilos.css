@@ -1,0 +1,163 @@
+/* estilos.css — el aspecto de la página de la batería (color de DWEC). No hace falta tocarlo. */
+:root {
+  --dwec: #ea4335;
+  --fondo: #f7f7f8;
+  --texto: #1f2328;
+  --suave: #59636e;
+  --borde: #d0d7de;
+  --bien: #1a7f37;
+  --mal: #cf222e;
+  --pendiente: #9a6700;
+  --codigo: #24292f;
+  font-family: system-ui, sans-serif;
+  color: var(--texto);
+  background: var(--fondo);
+}
+body {
+  margin: 0;
+}
+header {
+  background: var(--dwec);
+  color: white;
+  padding: 1rem 1.5rem 0.5rem;
+}
+header h1 {
+  margin: 0 0 0.6rem;
+  font-size: 1.4rem;
+}
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+nav a {
+  color: white;
+  text-decoration: none;
+  padding: 0.35rem 0.7rem;
+  border-radius: 6px 6px 0 0;
+  background: rgb(255 255 255 / 0.15);
+  font-size: 0.9rem;
+}
+nav a.activo {
+  background: var(--fondo);
+  color: var(--dwec);
+  font-weight: 600;
+}
+main {
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem 3rem;
+}
+section {
+  background: white;
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  padding: 0.5rem 1.2rem 1rem;
+  margin-bottom: 1rem;
+}
+h2 {
+  font-size: 1.1rem;
+}
+.titulo-bloque {
+  font-size: 1.3rem;
+  color: var(--dwec);
+}
+p {
+  color: var(--suave);
+}
+code,
+pre,
+textarea {
+  font-family: ui-monospace, "Cascadia Code", Menlo, monospace;
+  font-size: 0.88rem;
+}
+.ejemplos {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.ejemplo {
+  display: grid;
+  grid-template-columns: 1.8rem 1fr;
+  gap: 0.2rem 0.5rem;
+  padding: 0.6rem 0.6rem;
+  border-left: 4px solid var(--borde);
+  margin-bottom: 0.5rem;
+  background: #fafbfc;
+}
+.ejemplo .codigo {
+  margin: 0;
+  white-space: pre-wrap;
+  color: var(--codigo);
+}
+.ejemplo .resultado {
+  grid-column: 2;
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 0.88rem;
+  white-space: pre-wrap;
+}
+.bien {
+  border-left-color: var(--bien);
+}
+.bien .resultado,
+.salida.bien {
+  color: var(--bien);
+}
+.mal {
+  border-left-color: var(--mal);
+}
+.mal .resultado,
+.salida.mal,
+section.mal pre {
+  color: var(--mal);
+}
+.pendiente {
+  border-left-color: var(--pendiente);
+}
+.pendiente .resultado {
+  color: var(--pendiente);
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+th,
+td {
+  text-align: left;
+  padding: 0.35rem 0.5rem;
+  border-bottom: 1px solid var(--borde);
+  vertical-align: top;
+}
+td.real {
+  font-family: ui-monospace, Menlo, monospace;
+  font-weight: 600;
+}
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.5rem;
+  border: 1px solid var(--borde);
+  border-radius: 6px;
+}
+button {
+  margin-top: 0.4rem;
+  padding: 0.35rem 0.9rem;
+  border: 0;
+  border-radius: 6px;
+  background: var(--dwec);
+  color: white;
+  cursor: pointer;
+}
+td button {
+  margin: 0;
+}
+.salida {
+  white-space: pre-wrap;
+  min-height: 1.2rem;
+}
+.depurar li {
+  margin-bottom: 0.4rem;
+}
+.nota {
+  font-size: 0.85rem;
+}
