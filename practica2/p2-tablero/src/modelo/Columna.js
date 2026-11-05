@@ -13,7 +13,7 @@ export class Columna {
       throw new TypeError("El nombre no puede tener espacios. ")
     }
     // limiteWip: null (sin límite) o un entero ≥ 1 → si no, RangeError
-    if(limiteWip !== null && (!Number.isInteger(limiteWip) || limiteWip <= 1)){
+    if(limiteWip !== null && (!Number.isInteger(limiteWip) || limiteWip < 1)){
       throw new RangeError("El limite debe ser un entero mayor o igual a 1. ")
     }
 
@@ -41,7 +41,7 @@ export class Columna {
     }
 
     if(this.llena){ // comprobamos si la columna esta llena
-      throw new TypeError("Está llena.")
+      throw new Error(`La columna ${this.nombre} está llena`)
     }
 
     this.#tareas.push(tarea); //añado la tarea al final del array
@@ -61,7 +61,7 @@ export class Columna {
 
     //sino lo encuentra da -1
     if(indice === -1){ // si no lo encuentra da ese error
-      throw new TypeError("La tarea no está.")
+      throw new Error(`La tarea ${id} no está en la columna ${this.nombre}.`)
     } 
     
     // splice modifica el array original

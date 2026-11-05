@@ -196,10 +196,10 @@ export class Tablero {
 
   // ✍️ A5 · Reglas (vuelves a mover y completar) ─────────────────────────────────
   //   - Columna llena → ColumnaLlenaError (en vez de un Error cualquiera) -> hecho
-  //   - Sacar una tarea de «Hecho», o «moverla» a la columna en la que ya está →
-  //     MovimientoNoPermitidoError. Todo se comprueba ANTES de tocar nada.
+  //   - Sacar una tarea de «Hecho», o «moverla» a la columna en la que ya está → hecho
+  //     MovimientoNoPermitidoError. Todo se comprueba ANTES de tocar nada. -> hecho
   //   Pista: mover y completar hacen casi lo mismo. Un método privado #trasladar(id, destino)
-  //   con las comprobaciones evita escribirlas dos veces.
+  //   con las comprobaciones evita escribirlas dos veces. -> hecho
 
   // ✍️ C4 (bloque C) ────────────────────────────────────────────────────────────
   // toJSON(): { version, limiteEnCurso, columnas: { "Por hacer": [datos…], … } }
