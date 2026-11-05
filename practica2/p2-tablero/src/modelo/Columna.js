@@ -72,11 +72,55 @@ export class Columna {
     
   }
   // 6 · tiene(id): true / false. Pista: some
+  // some -> comprueba si al menos un elemento del array cumple con la condicion implementada por la funcion proporcionada
+  // este metodo devuelve false para cualquier condicion puesta en un array vacio
+
+  tiene(id){
+    return this.#tareas.some(tarea => tarea.id === id)
+  }
 
   // 7 · ordenadas(): un array NUEVO ordenado: primero prioridad alta (usa t.peso), y a igual
   //     prioridad, el límite más cercano; las que no tienen límite, al final.
   //     Pista: [...this.#tareas].sort((a, b) => …) — ¿por qué la copia?
+
+    //   negativo -> a va antes que b
+    //   positivo -> b va antes que a
+    //   0        -> da igual, se quedan como están
+
+  ordenadas(){
+    
+    return [...this.#tareas].sort((a, b) => { //sort() reordena la copia y no toca el array original #tareas.
+    
+      if (a.peso !== b.peso) {
+      // Si los pesos son distintos, decide la prioridad y no miramos nada más.
+      // b.peso - a.peso => el peso mayor va primero, primero prioridad alta
+        return b.peso - a.peso;
+      }
+
+      if (!a.limite && !b.limite) { // empate de prioridad, ninguna tiene limite
+        return 0; // el 0 es empate, se dejan como están
+      }
+
+      if (!a.limite) {
+        // Solo a no tiene límite: positivo => a se va detrás de b, al final
+        return 1; //positivo -> a antes que b
+      }
+      if (!b.limite) {
+        // Solo b no tiene límite: negativo => a se queda delante, antes que b
+        return -1; //negativo -> b antes que a
+      }
+
+      // Las dos tienen límite, resto las fechas.
+      return a.limite - b.limite; //la fecha más cercana (más pequeña) sale primero.
+      
+      // Date -> contiene un Number que representa milisegundos transcurridos 
+      // Comparar dos Date con === compara objetos, no fechas, dos fechas iguales dan false
+  });
+  }
+
+
+
+
 }
 
 // Comprueba con:  docker compose run --rm web npm test 3-columna
-void Tarea; // (borra esta línea cuando uses Tarea)
