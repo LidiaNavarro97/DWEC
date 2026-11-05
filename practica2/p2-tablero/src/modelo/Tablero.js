@@ -96,7 +96,7 @@ export class Tablero {
 
     for(const col of this.columnas){ // recorro la columnas una por una
 
-      const t = col.tareas.find(t => t.id === id ); // le pedimos a la columna que busque la letra
+      const t = col.tareas.find(tarea => tarea.id === id ); // le pedimos a la columna que busque la tarea
 
       if(t){
         return t; // si la encuentra que la devuelva y termina
@@ -119,26 +119,45 @@ export class Tablero {
     return null;
   }
 
+  // privado #trasladar, que lo usaran mover y completar
+
+  #trasladar(id, destino){
+
+    const origen = this.dondeEsta(id);
+
+    if(origen === null){ // sino esta en ninguna columna no existe
+      throw new Error(`No existe la tarea ${id}`);
+    }
+
+    // lanza el error sola si el nombre no existe
+    const columna = this.columna(destino);
+
+    if(origen.nombre === "Hecho"){ // de Hecho no se puede sacar nada
+      throw new MovimientoNoPermitidoError(id, origen.nombre, destino);
+    }
+
+    if(origen === columna) { // no se puede mover a la columna en la que ya está
+      throw new MovimientoNoPermitidoError(id, origen.nombre, destino);
+    }
+
+    if(columna.llena){ // destino lleno, pasandole la columna
+      throw new ColumnaLlenaError(columna)
+    }
+
+    // ahora se toca algo cuando las comprobaciones han pasado
+    const tarea = origen.quitar(id);
+    return columna.añadir(tarea); // añadir devuelve la tarea
+
+  }
+
+
   // mover(id, destino): Error si no existe la tarea · Error si la columna destino está llena
   //   (¡comprueba ANTES de quitarla de su columna, o se perdería!) · la mueve y la devuelve
 
   mover(id, destino){
     
-    const origen = this.dondeEsta(id); // buscamos la col dond esta la tarea ahora mismo
+    return this.#trasladar(id, destino)
 
-    if(origen === null){ //si es null la tarea no existe -> lanzo un error
-      throw new Error(`No existe la tarea ${id}`);
-    }
-
-    const columna = this.columna(destino); // busco la columna destino
-
-    if(columna.llena){ //si la columna está llena -> lanzo un error
-      throw new Error(`La columna ${destino} está llena`);
-    }
-
-    const tarea = origen.quitar(id); // ahora es seguro quitarla del origen
-
-    return columna.añadir(tarea); // la añado al destino -> añadir ya devuelve tmb la tarea
   }
 
   // completar(id): la mueve a «Hecho» y añade a «Por hacer» lo que devuelva tarea.alCompletar()
@@ -146,7 +165,7 @@ export class Tablero {
 
   completar(id) {
 
-  const tarea = this.mover(id, "Hecho"); //muevo la tarea Hecho, utilizando mover que nos devuelve la tarea
+  const tarea = this.#trasladar(id, "Hecho"); //muevo la tarea Hecho, utilizando mover que nos devuelve la tarea
   
   // no preguntamos el tipo -> polimorfismo.
   for (const siguiente of tarea.alCompletar()) { 
@@ -176,7 +195,7 @@ export class Tablero {
 }
 
   // ✍️ A5 · Reglas (vuelves a mover y completar) ─────────────────────────────────
-  //   - Columna llena → ColumnaLlenaError (en vez de un Error cualquiera)
+  //   - Columna llena → ColumnaLlenaError (en vez de un Error cualquiera) -> hecho
   //   - Sacar una tarea de «Hecho», o «moverla» a la columna en la que ya está →
   //     MovimientoNoPermitidoError. Todo se comprueba ANTES de tocar nada.
   //   Pista: mover y completar hacen casi lo mismo. Un método privado #trasladar(id, destino)
