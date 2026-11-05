@@ -20,7 +20,12 @@ export class Contador {
 //        (pista: Math.hypot)
 export class Punto {
   constructor(x, y) {
-    throw new Error("Sin hacer");
+    this.x = x;
+    this.y = y;
+  }
+
+  distanciaAlOrigen(){ // calculo la distancia desde el punto (0,0)
+    return Math.hypot(this.x, this.y); // calculo la hipotenusa
   }
 }
 

@@ -8,3 +8,5 @@ export const predicciones = {
 
 // p3 -> static significa que la propiedad pertenece a la clase o a sus instancias
 // new D() crea una instancia que no tiene la propiedad n
+
+// L.prototype.resumen hace referencia al método y devuelve una funcion
