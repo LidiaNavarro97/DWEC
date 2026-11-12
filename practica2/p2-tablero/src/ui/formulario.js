@@ -7,12 +7,14 @@
  * cadaDias un número o undefined (si está vacío).
  */
 export function leerFormulario(form) {
-  const campos = Object.fromEntries(new FormData(form));
+  const campos = Object.fromEntries(new FormData(form)); //convierte el formulario en un objeto
   const datos = {
-    titulo: (campos.titulo ?? "").trim(),
-    prioridad: campos.prioridad,
-    limite: campos.limite ? campos.limite : null,
+    titulo: (campos.titulo ?? "").trim(), //sino existe usa "" y quita espacios de los lados
+    prioridad: campos.prioridad, //
+    limite: campos.limite ? campos.limite : null, // si está vacio pues null
   };
+
+  //solo si hay algo lo convierte a numero
   if (campos.cadaDias?.trim()) datos.cadaDias = Number(campos.cadaDias);
   return datos;
 }

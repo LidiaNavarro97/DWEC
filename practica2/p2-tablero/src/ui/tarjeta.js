@@ -3,12 +3,13 @@ import { formatear } from "../modelo/fechas.js";
 
 /** Tarea → <article class="tarjeta tarjeta--alta" data-id="3"> con su título y su límite */
 export function crearTarjeta(tarea, hoy = new Date()) {
-  const tarjeta = document.createElement("article");
-  tarjeta.classList.add("tarjeta", `tarjeta--${tarea.prioridad}`);
-  tarjeta.classList.toggle("tarjeta--vencida", tarea.estaVencida(hoy));
+  const tarjeta = document.createElement("article"); // crea la etiqueta <article>
+  tarjeta.classList.add("tarjeta", `tarjeta--${tarea.prioridad}`); //añade esas clases
+  tarjeta.classList.toggle("tarjeta--vencida", tarea.estaVencida(hoy)); // true pone la clase, flase la quita
   tarjeta.dataset.id = tarea.id; // en el HTML: data-id="3" (siempre texto)
 
   const titulo = document.createElement("h3");
+  // pone texto plano sin interpretar html
   titulo.textContent = tarea.titulo; // textContent, NUNCA innerHTML con lo que escribe el usuario
   tarjeta.append(titulo);
 
@@ -26,5 +27,19 @@ export function crearTarjeta(tarea, hoy = new Date()) {
 //   - Pintar dos veces NO puede duplicar: primero vacía. Pista: contenedor.replaceChildren(...)
 //   - Sin tareas: deja SOLO un <p class="vacia">Sin tareas</p>
 export function pintarLista(contenedor, tareas, hoy = new Date()) {
-  throw new Error("Sin hacer");
+  //sino hay tareas dejo solo el mensaje de "Sin tareas"
+  if(tareas.length === 0){
+    const vacia = document.createElement("p"); //creo la etiqueta <p>
+    vacia.className = "vacia"; // le pongo class="vacia"
+    vacia.textContent = "Sin tareas"; //texto plano
+    contenedor.replaceChildren(vacia); //vacia el contenedor y mete solo <p>
+    return;
+  }
+
+  //si si hay tareas -> una tarjeta por tarae, en el mismo orden
+  const tarjetas = tareas.map((tarea) => crearTarjeta(tarea, hoy));
+
+  //pintar dos veces no duplica
+  //replaceChildren vacio primero y luego pone las tarjetas
+  contenedor.replaceChildren(...tarjetas);
 }
