@@ -43,7 +43,47 @@ export function iniciarApp(raiz, tablero, { hoy = null, alCambiar = () => {} } =
   //   - [data-dato="vencidas"]: las vencidas de tablero.resumen(ahora)
   //   La fecha de hoy: const ahora = hoy ?? new Date();  (los tests pasan una fija)
   function pintar() {
-    throw new Error("Sin hacer");
+
+    const ahora = hoy ?? new Date(); // la fecha de hoy fija de los tests o la de vd sino viene
+
+    for (const columna of tablero.columnas){
+      // busco su zona en el html con el nombre de la columna en el selector
+      const zona = raiz.querySelector(`[data-columna="${columna.nombre}"]`);
+      const lista = zona.querySelector(".lista");
+      const contador = zona.querySelector(".contador");
+
+      // Pintar las tarjetas en el orden de ordenadas
+      pintarLista(lista, columna.ordenadas(), ahora);
+
+      // A cada tarjeta le añado sus botones
+      for (const tarjeta of lista.querySelectorAll(".tarjeta")) {
+        
+        for (const [texto, accion] of ACCIONES[columna.nombre]) {
+          const boton = document.createElement("button"); // crea el <button>
+          boton.type = "button"; // para que nunca envíe un formulario
+          boton.dataset.accion = accion; // en el HTML data-accion
+          boton.textContent = texto; // texto visible
+          tarjeta.append(boton); // lo metemos dentro de la tarjeta
+        }
+      }
+
+      // Contador de (n) o (n/limite) si la columna tiene limiteWip
+      const cuantas = columna.tareas.length;
+      contador.textContent = columna.limiteWip === null
+          ? `(${cuantas})`
+          : `(${cuantas}/${columna.limiteWip})`;
+
+    }
+
+    const datos = tablero.resumen(ahora); // { porHacer, enCurso, hecho, vencidas }
+    const total = datos.porHacer + datos.enCurso + datos.hecho;
+
+    // Si total es 0, 0 / 0 da NaN, así que lo evitamos con este if
+    const progreso = total === 0 ? 0 : Math.round((datos.hecho / total) * 100);
+
+    resumen.querySelector('[data-dato="progreso"]').textContent = `${progreso} %`;
+    resumen.querySelector('[data-dato="vencidas"]').textContent = datos.vencidas;
+
   }
 
   // 👀 Resuelto: avisar("texto") enseña el aviso; avisar("") lo esconde
