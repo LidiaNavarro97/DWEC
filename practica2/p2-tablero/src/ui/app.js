@@ -118,12 +118,24 @@ export function iniciarApp(raiz, tablero, { hoy = null, alCambiar = () => {} } =
     avisar(""); // esconde un aviso anterior
     pintar(); // deja la pagina igual q el modelo
     alCambiar(tablero); // avisa de q algo ha cambiado
-
+ 
   }
 
+  // un solo listener en columnas puesot una vez fuera de pintar
   delegar(columnas, "click", "button[data-accion]", (boton) => {
 
     const accion = boton.dataset.accion;
+
+    // dataset.id es texto "3", con Number lo convierto a numero
+    const id = Number(boton.closest(".tarjeta").dataset.id);
+
+    if (accion === "empezar") {
+      cambiar(() => tablero.mover(id, "En curso"));
+    } else if (accion === "volver") {
+      cambiar(() => tablero.mover(id, "Por hacer"));
+    } else if (accion === "completar") {
+      cambiar(() => tablero.completar(id));
+    }
     
   })
 
@@ -135,4 +147,4 @@ export function iniciarApp(raiz, tablero, { hoy = null, alCambiar = () => {} } =
   return { pintar };
 }
 
-(void ACCIONES, ErrorTablero, delegar, leerFormulario, mostrarErrores, pintarLista); // (borra esta línea cuando los uses)
+
