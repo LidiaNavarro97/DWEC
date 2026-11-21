@@ -21,7 +21,27 @@ const ACCIONES = {
 //   - cadaDias (si viene): entero mayor que 0. Si es correcto pero no hay limite, el error va
 //     en «limite»: una tarea que se repite necesita fecha límite
 export function validar(datos) {
-  throw new Error("Sin hacer");
+  const errores = {}; //aqui guardo {campo: "mensaje"}
+
+  // titulo obligatorio y 80 como mucho
+  if (datos.titulo === "") {
+    errores.titulo = "El título es obligatorio";
+  } else if (datos.titulo.length > 80) {
+    errores.titulo = "El título no puede pasar de 80 caracteres";
+  }
+
+  // cadaDias solo se comprueba si viene y si está vacío es undefined
+  if (datos.cadaDias !== undefined) {
+    // isInteger da false con 2.5 y con NaN y además tiene que ser mayor que 0
+    if (!Number.isInteger(datos.cadaDias) || datos.cadaDias < 1) {
+      errores.cadaDias = "Repetir cada debe ser un número entero mayor que 0";
+    } else if (!datos.limite) {
+      // cadaDias está bien pero falta el límite: el error va en limite
+      errores.limite = "Una tarea que se repite necesita fecha límite";
+    }
+  }
+
+  return errores; // si todo está bien
 }
 
 /**
@@ -143,8 +163,28 @@ export function iniciarApp(raiz, tablero, { hoy = null, alCambiar = () => {} } =
   // ✍️ B6 · submit de `form`: preventDefault, leerFormulario, validar y mostrarErrores. Si hay errores,
   //   no se crea nada. Si no, tablero.crearTarea(datos) (como un cambio más) y form.reset().
 
+  //un solo listener para el envio del formulario
+  form.addEventListener("submit", (evento) => {
+    evento.preventDefault(); // si no el navegador envía el formulario y recarga la página
+
+    const datos = leerFormulario(form); // datos limpios
+    const errores = validar(datos); // { campo: "mensaje" } o {}
+
+    // siempre se llama, también sin errores así borra los mensajes de antes
+    mostrarErrores(form, errores);
+
+    // Si hay algún error, no hacemos nada más
+    if (Object.keys(errores).length > 0) return;
+
+    // Crear la tarea como un cambio más así se repinta y se avisa a alCambiar
+    cambiar(() => tablero.crearTarea(datos));
+    form.reset(); // vacía el formulario
+
+  });
+
   pintar();
   return { pintar };
+  
 }
 
 
