@@ -27,5 +27,15 @@ export function aDatos(tarea) {
 // ✍️ C1 · desdeDatos(datos) → lo contrario de aDatos: TareaRecurrente si trae cadaDias, Tarea si no
 //   (cada campo a su sitio en el constructor, también el id)
 export function desdeDatos(datos) {
-  throw new Error("Sin hacer");
+
+  // destructuracion, saco cada campo del objeto en su propia variable
+  const {id, titulo, prioridad, limite, cadaDias} = datos;
+
+  if (cadaDias !== undefined) { // si cadaDias no es undefined, es tarea recurrente
+    return new TareaRecurrente(titulo, prioridad, limite, cadaDias, id); //oren constructor
+  }
+  
+  // sino, pues es una tarea normal
+  return new Tarea(titulo, prioridad, limite, id) //orden constructor
 }
+ 
