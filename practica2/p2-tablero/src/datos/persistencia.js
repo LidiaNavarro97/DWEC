@@ -20,7 +20,34 @@ export async function arrancar({
   url = "/tareas-iniciales.json",
   limiteEnCurso = 3,
 } = {}) {
-  throw new Error("Sin hacer");
-}
+  
+  //sino hay algo guardado, cargar devuelve null sino hay nada o esta roto
+  const guardado = cargar(CLAVE, null, storage);
 
-(void Tablero, borrar, cargar, guardar, obtenerJSON); // (borra esta línea cuando los uses)
+  if (guardado !== null) {
+    try { //si desde JSON lo acepta, lo recuperamos y no tocamos la red
+      return { 
+        tablero: Tablero.desdeJSON(guardado), 
+        origen: "guardado"}
+    } catch { //es JSON pero no sirve, por ej otra version, lo borramos y seguimos hacia abajo
+      borrar(CLAVE, storage);
+    }
+  }
+
+  //descargar las tareas iniciales
+  try {
+    //el await va dentro del try, si la promesa se rechaza lo recoge el catch
+    const datos = await obtenerJSON(url, fetchFn);
+
+    return {
+      tablero: Tablero.desde(datos, limiteEnCurso),
+      origen: "inicial"}
+    } catch (error) {
+      // tampoco se pudo descargar: tablero vacio y el motivo
+      return {
+        tablero: new Tablero(limiteEnCurso),
+        origen: "vacio",
+        error: error.message,
+      }
+  }
+}
