@@ -205,17 +205,42 @@ export class Tablero {
   // toJSON(): { version, limiteEnCurso, columnas: { "Por hacer": [datos…], … } }
   //   JSON.stringify(tablero) lo llama solo. Sin él sale "{}": los # no se ven. Usa aDatos.
 
+  toJSON() { // convierte a texto lo q devuelve
+
+    const columnas = {}; //objeto vacio y lo relleno en el bucle
+
+    // recorro los nombres por orden, "por hacer", "en curso", "hecho"
+    for (const nombre of Tablero.COLUMNAS) {
+      // de cada tarea de la columna saco su objeto plano con aDatos
+      columnas[nombre] = this.columna(nombre).tareas.map((tarea) => aDatos(tarea));
+    }
+
+    return {
+      version: Tablero.VERSION_DATOS, //si cambia el formato, se sube este numero
+      limiteEnCurso: this.columna("En curso").limiteWip, //limiteWip de "en curso"
+      columnas,
+    }
+  }
+
+
   /** Lo contrario de toJSON: el MISMO tablero (columnas, ids y límite WIP). Lanza si no encaja. */
   static desdeJSON(datos) {
-    throw new Error("Sin hacer");
+    //sin datos o con otra version lanzo el error
+    if (!datos || datos.version !== Tablero.VERSION_DATOS) {
+      throw new Error("Datos del tablero no valido o de otra versión");
+    }
+    // tablero nuevo con el mismo limite WIP
+    const tablero = new Tablero(datos.limiteEnCurso);
+
+    // para cada columna recupero sus tareas
+    for (const nombre of Tablero.COLUMNAS) {
+      for (const objeto of datos.columnas[nombre] ?? []) {
+        const tarea = desdeDatos(objeto); // con su id gracias a lo q hicimos en C3
+        tablero.columna(nombre).añadir(tarea); // directa a su columna, sin crearTarea ni mover
+      }
+    }
+    // devuelvo el tablero ya relleno
+    return tablero;
   }
 }
 
-// Comprueba con:  docker compose run --rm web npm test bloque-a
-(void Columna,
-  ColumnaLlenaError,
-  MovimientoNoPermitidoError,
-  Tarea,
-  TareaRecurrente,
-  aDatos,
-  desdeDatos); // (borra esta línea cuando los uses)
