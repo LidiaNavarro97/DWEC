@@ -6,6 +6,8 @@ import { ColumnaLlenaError, MovimientoNoPermitidoError } from "./errores.js";
 import { Tarea } from "./Tarea.js";
 import { TareaRecurrente } from "./TareaRecurrente.js";
 import { aDatos, desdeDatos } from "./serializar.js";
+import { TareaConMateriales } from "./TareaConMateriales.js";
+
 
 export class Tablero {
   static COLUMNAS = Object.freeze(["Por hacer", "En curso", "Hecho"]);
@@ -75,14 +77,19 @@ export class Tablero {
   crearTarea(datos){
 
     // DESTRUCTURING -> sacamos cada campo del objeto datos en su propia variable.
-    const {titulo, prioridad, limite, cadaDias} = datos;
+    const {titulo, prioridad, limite, cadaDias, materiales} = datos; // le meto materiales
 
     // Si trae cadaDias es recurrente, si no, es una tarea normal
     // Pasamos los argumentos en el orden que espera cada constructor
     let tarea;
-    if (cadaDias) {
+
+    if (materiales !== undefined) {
+      tarea = new TareaConMateriales(titulo, prioridad, limite, materiales);
+    }
+    else if (cadaDias) {
       tarea = new TareaRecurrente(titulo, prioridad, limite, cadaDias);
-    } else {
+    } 
+    else {
       tarea = new Tarea(titulo, prioridad, limite);
     }
 
@@ -131,10 +138,13 @@ export class Tablero {
 
     // lanza el error sola si el nombre no existe
     const columna = this.columna(destino);
+    const tarea = this.buscar(id);
 
     if(origen.nombre === "Hecho"){ // de Hecho no se puede sacar nada
       throw new MovimientoNoPermitidoError(id, origen.nombre, destino);
     }
+
+    
 
     if(origen === columna) { // no se puede mover a la columna en la que ya está
       throw new MovimientoNoPermitidoError(id, origen.nombre, destino);
@@ -145,7 +155,6 @@ export class Tablero {
     }
 
     // ahora se toca algo cuando las comprobaciones han pasado
-    const tarea = origen.quitar(id);
     return columna.añadir(tarea); // añadir devuelve la tarea
 
   }
@@ -155,6 +164,11 @@ export class Tablero {
   //   (¡comprueba ANTES de quitarla de su columna, o se perdería!) · la mueve y la devuelve
 
   mover(id, destino){
+
+    const origen = this.dondeEsta(id); // la columna donde esta ahora
+    const tarea = this.buscar(id); 
+    // sino se cumple la regla, lanza y aqui se corta
+    tarea.comprobarPaso(origen.nombre, destino);
     
     return this.#trasladar(id, destino)
 
