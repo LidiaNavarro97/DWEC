@@ -1,3 +1,4 @@
+import { FaltaMaterialError } from "./errores.js";
 import { Tarea } from "./Tarea.js";
 
 export class TareaConMateriales extends Tarea {
@@ -35,10 +36,11 @@ export class TareaConMateriales extends Tarea {
         material.unidades = unidades;
     }
 
-    comprobarPaso(desde) {
-    const faltan = this.#materiales.filter((m) => m.unidades === 0).map((m) => m.nombre);
-    if (desde === "Por hacer" && faltan.length > 0) throw new FaltaMaterialError(faltan);
-  }
+    comprobarPaso(desde, hasta) {
+        if (desde !== "Por hacer") return; // la regla es para EMPEZAR
+        const faltan = this.#materiales.filter((m) => m.unidades === 0).map((m) => m.nombre);
+        if (faltan.length > 0) throw new FaltaMaterialError(faltan);
+    }
 
 
 }
