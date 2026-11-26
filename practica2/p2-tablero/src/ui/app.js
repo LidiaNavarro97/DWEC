@@ -44,6 +44,39 @@ export function validar(datos) {
   return errores; // si todo está bien
 }
 
+
+function revisar(valor, tarea, tablero, hoy) {
+  
+  return "";
+}
+
+function aplicar(tablero, tarea, valor) {
+  tablero.mover(tarea.id, "En curso");   // PRIMERO mover: si «En curso» está llena, lanza y no se ha tocado nada
+  
+}
+
+function crearBoton(texto, accion) {
+  const boton = document.createElement("button");     // 1. crea un <button> vacío (aún no está en la página)
+  boton.type = "button";                              // 2. type="button": así NO envía el formulario
+  boton.textContent = texto;                          // 3. el texto que se ve
+  boton.dataset.accion = accion;                      // 4. data-accion="…": lo que lee tu listener de clics
+  return boton;                                       // 5. lo devuelve; quien la llama decide dónde ponerlo (append)
+}
+
+const crear = (etiqueta, datos) => Object.assign(document.createElement(etiqueta), datos);
+
+function crearFormulario(tarea) {
+  const form = crear("form", { noValidate: true });
+  form.dataset.form = "renombrar";
+  const etiqueta = crear("label", { textContent: `Título nuevo de «${tarea.titulo}»` });
+  etiqueta.append(crear("input", { name: "titulo", type: "text", value: tarea.titulo }));
+  const error = crear("p", { className: "error" });
+  error.dataset.errorDe = "titulo";
+  const enviar = crear("button", { type: "submit", textContent: "Guardar" });
+  form.append(etiqueta, error, enviar, crearBoton("Cancelar", "cancelar"));
+  return form;
+}
+
 /**
  * Arranca la interfaz dentro de raiz (el <main id="app">). Los listeners se ponen UNA vez aquí;
  * pintar() solo cambia nodos, así que repintar no los duplica.
@@ -79,13 +112,15 @@ export function iniciarApp(raiz, tablero, { hoy = null, alCambiar = () => {} } =
       for (const tarjeta of lista.querySelectorAll(".tarjeta")) {
         
         for (const [texto, accion] of ACCIONES[columna.nombre]) {
-          const boton = document.createElement("button"); // crea el <button>
-          boton.type = "button"; // para que nunca envíe un formulario
-          boton.dataset.accion = accion; // en el HTML data-accion
-          boton.textContent = texto; // texto visible
-          tarjeta.append(boton); // lo metemos dentro de la tarjeta
-        }
-      }
+          if (columna.nombre === "Por hacer" && tablero.buscar(Number(tarjeta.dataset.id)).limite){
+            tarjeta.append(crearBoton("Renombrar y empezar", "renombrar"));
+            const boton = document.createElement("button"); // crea el <button>
+            boton.type = "button"; // para que nunca envíe un formulario
+            boton.dataset.accion = accion; // en el HTML data-accion
+            boton.textContent = texto; // texto visible
+            tarjeta.append(boton); // lo metemos dentro de la tarjeta
+          }
+        } 
 
       // Contador de (n) o (n/limite) si la columna tiene limiteWip
       const cuantas = columna.tareas.length;
@@ -156,8 +191,33 @@ export function iniciarApp(raiz, tablero, { hoy = null, alCambiar = () => {} } =
     } else if (accion === "completar") {
       cambiar(() => tablero.completar(id));
     }
+
+    if (accion === "renombrar") {
+    // cierra el formulario que haya abierto: columnas.querySelector("form")?.remove()
+    // TU TURNO: añade crearFormulario(tarea) a ESA tarjeta y pon el foco en su input
+      const tarjeta = boton.closest(".tarjeta");
+
+    if (!tarjeta.querySelector("form")){
+      const tarea = tablero.buscar(id);
+      const form = crearFormulario(tarea);
+
+      tarjeta.append(form);
+      form.querySelector("input").focus();
+    }
+    }
+    
+    if (accion === "cancelar") return columnas.querySelector("form")?.remove();
     
   })
+
+  delegar(columnas, "submit", "form", (formulario, evento) => {
+    evento.preventDefault();                                    // sin recargar la página
+    const tarea = tablero.buscar(Number(formulario.closest(".tarjeta").dataset.id));
+    const valor = formulario.elements.titulo.value.trim();     // SIEMPRE un string
+    const mensaje = revisar(valor, tarea, tablero, hoy ?? new Date());
+    mostrarErrores(formulario, { titulo: mensaje });          // pinta o borra el mensaje bajo el campo
+    if (mensaje === "") cambiar(() => aplicar(tablero, tarea, valor));
+  });
 
 
   // ✍️ B6 · submit de `form`: preventDefault, leerFormulario, validar y mostrarErrores. Si hay errores,
@@ -186,5 +246,8 @@ export function iniciarApp(raiz, tablero, { hoy = null, alCambiar = () => {} } =
   return { pintar };
   
 }
+
+}
+
 
 
